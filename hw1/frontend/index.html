@@ -1,13 +1,78 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>trello clone</title>
+    <title>My Diary</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="index.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js"
+      integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <h1>My Diary</h1>
+    <button id="todo-add-main" tabindex="3">add</button>
   </body>
+  <template id="todo-input-container">
+    <div>
+      <input type="text"  id="todo-input" placeholder="Diary Title" tabindex="1" />
+      <select id="mood-input">
+        <option value="">choose your mood</option>
+        <option value="happy">開心</option>
+        <option value="sad"  >難過</option>
+        <option value="angry">生氣</option>
+      </select>
+      <select id="tag-input">
+        <option value="">choose the tag</option>
+        <option value="study" >學業</option>
+        <option value="social">人際</option>
+        <option value="club"  >社團</option>
+      </select>
+      <input type="date"  id="date-input" placeholder="select the date" tabindex="1" />
+    </div>
+    <textarea
+      id="todo-description-input"
+      placeholder="content"
+      tabindex="2"
+    ></textarea>
+    <div>
+      <button id="cancel" tabindex="3">cancel</button>
+      <button id="submit" tabindex="3">submit</button>
+    </div>
+  </template>
+
+  <section id="todos"></section>
+
+  <template id="todo-item-template">
+    <details id="" class="todo-item">
+      <summary>
+        <div>
+          <p class="todo-title">todo 1</p>
+          <p class="mood-title">mood 1</p>
+          <p class="tag-title" >tag 1</p>
+          <p class="date-title">date 1</p>
+        </div>
+        <button data-id="" class="view-todo">view</button>
+        <button data-id="" class="edit-todo">edit</button>
+        <button data-id="" class="delete-todo">delete</button>
+      </summary>
+      <p class="todo-description">todo 1 description</p>
+    </details>
+  </template>
+
+  <template id="todo-view-template">
+    <h2 class="todo-view">todo 1</h2>
+    <div>
+      <button data-id="" class="back-to-list-page">back</button>
+      <button data-id="" class="edit-todo-in-view">edit</button>
+    </div>
+    <div>
+      <p class="tag-view">tag 1</p>
+      <p class="mood-view">mood 1</p>
+      <p class="date-view">date 1</p>
+    </div>
+    <p class="description-view">todo 1 description</p>
+  </template>
 </html>

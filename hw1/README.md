@@ -1,353 +1,384 @@
-# 112-1-unit1-trello-clone
+# 112-1-unit1-todo-list
+
+This repository is for the first and second week of the course.
+In the first week, we will build a simple todo list app with pure JavaScript and Node.js Express.
+In the second week, we will add MongoDB to the app, and we will also introduce Axios, a powerful HTTP client for the browser and Node.js.
 
 ## API documentation
 
-### card
-
-#### GET `/api/cards`
-
-- request body
-
-no body
-
-- response
+- GET `/api/todos`
 
 ```json
 [
   {
-    "id": "a4d603bc-5fcf-4f0d-9765-5430ac8e2602",
-    "title": "Card 1",
-    "description": "This is card 1",
-    "list_id": "d31df21d-e9ad-4b18-998a-564614599aa2"
+    "id": "69862077-f127-45a0-9cb2-39fa73592aca",
+    "title": "todo 1",
+    "completed": false,
+    "description": "todo 1 description"
+  }
+]
+```
+
+- GET `/api/todos/:id`
+
+```json
+{
+  "id": "69862077-f127-45a0-9cb2-39fa73592aca",
+  "title": "todo 1",
+  "completed": false,
+  "description": "todo 1 description"
+}
+```
+
+- POST `/api/todos`
+
+```json
+{
+  "title": "todo 1",
+  "completed": false,
+  "description": "todo 1 description"
+}
+```
+
+- PUT `/api/todos/:id`
+
+```json
+{
+  "id": "69862077-f127-45a0-9cb2-39fa73592aca",
+  "title": "todo 1",
+  "completed": false,
+  "description": "todo 1 description"
+}
+```
+
+- DELETE `/api/todos/:id`
+
+```json
+{
+  "id": "69862077-f127-45a0-9cb2-39fa73592aca",
+  "title": "todo 1",
+  "completed": false,
+  "description": "todo 1 description"
+}
+```
+
+## Run the project
+
+If you only want to run the project, you can follow the steps below.
+
+### 1. Clone the project
+
+```bash
+git clone https://github.com/ntuee-web-programming/112-1-unit1-todo-list.git
+```
+
+### 2. Install dependencies
+
+```bash
+cd backend
+yarn
+```
+
+### 3. Run the server
+
+```bash
+yarn start
+```
+
+### 4. Open the frontend
+
+Open `frontend/index.html` by clicking it in your file explorer.
+
+Or if you're on ubuntu, you can run the following command to open it in your browser.
+
+```bash
+cd frontend
+xdg-open index.html
+```
+
+If you're on macOS, you can run the following command to open it in your browser.
+
+```bash
+cd frontend
+open index.html
+```
+
+## Frontend eslint and prettier Setup
+
+### 1. Create a frontend directory and initialize a new Node.js project for eslint and prettier
+
+```bash
+mkdir frontend
+cd frontend
+yarn init -y
+```
+
+### 2. Install eslint and prettier
+
+eslint is a tool for identifying and reporting on patterns found in your code, with the goal of making code more consistent and enforce best practices. On the other hand, prettier code formatter. It only cares about the format but not the logic. However, eslint would also try to fix some minor formatting issues, so we need eslint-config-prettier to disable the eslint rules that may conflict with those of prettier.
+
+```bash
+yarn add -D eslint prettier eslint-config-prettier
+```
+
+### 3. configure eslint and prettier
+
+eslint come with a built-in command to create a config file to provide a good starting point. You can run the following command to create a `.eslintrc.js` file. You'll be prompted several questions about your project. For this project, answer these questions like so.
+
+```text
+$ yarn eslint --init
+You can also run this command directly using 'npm init @eslint/config'.
+? How would you like to use ESLint? …
+  To check syntax only
+❯ To check syntax and find problems # choose this one
+  To check syntax, find problems, and enforce code style
+? What type of modules does your project use? …
+  JavaScript modules (import/export)
+  CommonJS (require/exports)
+❯ None of these # choose this one
+? Which framework does your project use? …
+  React
+  Vue.js
+❯ None of these # choose this one
+? Does your project use TypeScript? › No / Yes # choose No
+? What format do you want your config file to be in? …
+❯ JavaScript # choose this one
+  YAML
+  JSON
+? Where does your code run? …  (Press <space> to select, <a> to toggle all, <i> to invert selection)
+✔ Browser # select this one
+✔ Node
+```
+
+After answering all the questions, you should see a `.eslintrc.js` file in your project directory. Open it and change the `extends` option. The final `.eslintrc.js` would look like this:
+
+```javascript
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
   },
-  {
-    "id": "a4d603bc-5fcf-4f0d-9765-5430ac8e2602",
-    "title": "Card 2",
-    "description": "This is card 2",
-    "list_id": "d31df21d-e9ad-4b18-998a-564614599aa2"
-  }
-]
-```
-
-#### GET `/api/cards/:id`
-
-- request body
-
-no body
-
-- response
-
-```json
-{
-  "id": "a4d603bc-5fcf-4f0d-9765-5430ac8e2602",
-  "title": "Card 1",
-  "description": "This is card 1",
-  "list_id": "d31df21d-e9ad-4b18-998a-564614599aa2"
-}
-```
-
-#### POST `/api/cards`
-
-- requst body
-
-```json
-{
-  "title": "Card 1",
-  "description": "This is card 1",
-  "list_id": "d31df21d-e9ad-4b18-998a-564614599aa2"
-}
-```
-
-- response
-
-```json
-{
-  "id": "a4d603bc-5fcf-4f0d-9765-5430ac8e2602"
-}
-```
-
-#### PUT `/api/cards/:id`
-
-- requst body
-
-```json
-{
-  "title": "Card 1",
-  "description": "This is card 1",
-  "list_id": "d31df21d-e9ad-4b18-998a-564614599aa2"
-}
-```
-
-- response
-
-```text
-OK
-```
-
-#### DELETE `/api/cards/:id`
-
-- request body
-
-no body
-
-- response
-
-```text
-OK
-```
-
-### list
-
-#### GET `/api/lists`
-
-- request body
-
-no body
-
-- response
-
-```json
-[
-  {
-    "id": "d31df21d-e9ad-4b18-998a-564614599aa2",
-    "name": "List 1"
-  }
-]
-```
-
-#### GET `/api/lists/:id`
-
-- request body
-
-no body
-
-- response
-
-```json
-{
-  "id": "d31df21d-e9ad-4b18-998a-564614599aa2",
-  "name": "List 1",
-  "cards": [
+  extends: ["eslint:recommended", "prettier"], // change this line
+  overrides: [
     {
-      "id": "a4d603bc-5fcf-4f0d-9765-5430ac8e2602",
-      "title": "Card 1",
-      "description": "This is card 1",
-      "list_id": "d31df21d-e9ad-4b18-998a-564614599aa2"
-    }
-  ]
-}
+      env: {
+        node: true,
+      },
+      files: [".eslintrc.{js,cjs}"],
+      parserOptions: {
+        sourceType: "script",
+      },
+    },
+  ],
+  parserOptions: {
+    ecmaVersion: "latest",
+  },
+  rules: {},
+};
 ```
 
-#### POST `/api/lists`
+For prettier, create a `.prettierrc.cjs` file in your project directory and add the following lines:
 
-- requst body
-
-```json
-{
-  "name": "List 1"
-}
+```javascript
+module.exports = {};
 ```
 
-- response
+### 3. Add scripts
 
-```json
-{
-  "id": "d31df21d-e9ad-4b18-998a-564614599aa2"
-}
-```
-
-#### PUT `/api/lists/:id`
-
-- requst body
-
-```json
-{
-  "name": "List 1"
-}
-```
-
-- response
-
-```text
-OK
-```
-
-#### DELETE `/api/lists/:id`
-
-- request body
-
-no body
-
-- response
-
-```text
-OK
-```
-
-## Run the app
-
-### 1. setup backend `.env`
-
-Start by copying the `.env.example` file to `.env`.
-
-```bash
-cd backend
-cp .env.example .env
-```
-
-Then, fill in the `MONGO_URI` field in `.env` with your MongoDB connection string and fill in the `PORT` field with the port you want to use. After that, you're `.env` file should look like this. If you don't want to use MongoDB Atlas, you can also run a local MongoDB server with Docker. You can find the instructions [here](https://hub.docker.com/_/mongo).
-
-```bash
-PORT=8000
-MONGO_URI="mongodb+srv://<username>:<password>@<cluster>.example.mongodb.net/?retryWrites=true&w=majority"
-```
-
-### 2. setup frontend `.env`
-
-Start by copying the `.env.example` file to `.env`.
-
-```bash
-cd frontend
-cp .env.example .env
-```
-
-Then, fill in the `VITE_API_URL` field in `.env` with the url of your backend server. After that, you're `.env` file should look like this. Note that the port should be the same as the one you set in the backend `.env` file.
-
-```bash
-VITE_API_URL="http://localhost:<PORT>/api"
-```
-
-### 3. start the backend server
-
-```bash
-cd backend
-yarn dev
-```
-
-### 4. start the frontend server
-
-```bash
-cd frontend
-yarn dev
-```
-
-Visit `http://localhost:5173` to see the app in action.
-
-## eslint and prettier
-
-The setup process is very similar to the one in the [previous project](https://github.com/ntuee-web-programming/112-1-unit1-todo-list). However, please keep in mind that we use different configuration files this time, frontend configuration is also different from that of backend, this may effect your homework grade. The required plugins can be found in `package.json`, if you can't run the linter or formatter, make sure you have all of the plugins installed correctly.
-
-The `lint` script is required in homeworks, please add these lines in your `package.json`.
+Add the following lines in `package.json` file:
 
 ```json
 {
 ...
   "scripts": {
     "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "format": "prettier --write ."
-  }
+  },
 ...
 }
 ```
 
-## Frontend Setup
+Now you can run `yarn lint` to check your code style and `yarn lint:fix` to fix some minor issues. You can also run `yarn format` to format your code.
 
-### 1. Create a vite project
+## Backend eslint and prettier Setup
 
-`yarn create vite` will create a new directory, which is the `frontend` directory, for you with everything set up. You'll need to answer a few questions to set up the project. If you don't understand some of them, don't worry, just follow the suggestions listed below. You'll (hopefully) understand all these questions as the course progresses.
+The eslint setup step are similar to the frontend setup. The only difference is that you should answer the questions differently when running `yarn eslint --init`.
 
-```bash
-$ cd frontend
-$ yarn create vite
-yarn create v1.22.19
-[1/4] 🔍  Resolving packages...
-[2/4] 🚚  Fetching packages...
-[3/4] 🔗  Linking dependencies...
-[4/4] 🔨  Building fresh packages...
-success Installed "create-vite@4.4.1" with binaries:
-      - create-vite
-      - cva
-? Project name: › vite-project # type `frontend` here
-? Select a framework: › - Use arrow-keys. Return to submit.
-    Vanilla
-    Vue
-❯   React # choose React
-    Preact
-    Lit
-    Svelte
-    Solid
-    Qwik
-    Others
-? Select a variant: › - Use arrow-keys. Return to submit.
-❯   TypeScript # choose TypeScript
-    TypeScript + SWC
-    JavaScript
-    JavaScript + SWC
+```text
+$ yarn eslint --init
+You can also run this command directly using 'npm init @eslint/config'.
+? How would you like to use ESLint? …
+  To check syntax only
+❯ To check syntax and find problems # choose this one
+  To check syntax, find problems, and enforce code style
+? What type of modules does your project use? …
+❯ JavaScript modules (import/export) # choose this one
+  CommonJS (require/exports)
+  None of these
+? Which framework does your project use? …
+  React
+  Vue.js
+❯ None of these # choose this one
+? Does your project use TypeScript? › No / Yes # choose No
+? What format do you want your config file to be in? …
+❯ JavaScript # choose this one
+  YAML
+  JSON
+? Where does your code run? …  (Press <space> to select, <a> to toggle all, <i> to invert selection)
+✔ Browser
+✔ Node # select this one
 ```
 
-That's it, you're done. You can now start the dev server by running `yarn dev`.
+The prettier setup for backend is different from that of the frontend package. Follow the steps below to setup prettier for backend. We will use "@trivago/prettier-plugin-sort-imports" to sort imports.
+
+### 1. Install prettier and "@trivago/prettier-plugin-sort-imports"
+
+```bash
+yarn add -D prettier @trivago/prettier-plugin-sort-imports
+```
+
+### 2. Create a `.prettierrc.cjs` file in your project directory and add the following lines:
+
+```javascript
+module.exports = {
+  plugins: [require.resolve("@trivago/prettier-plugin-sort-imports")],
+  importOrder: [
+    "^react",
+    "^next",
+    "<THIRD_PARTY_MODULES>",
+    "^@w+\\w",
+    "^@\\w",
+    "^./",
+  ],
+  importOrderSeparation: true,
+};
+```
+
+## Frontend Setup
+
+### 1. Create html, css, and js files (week 1)
+
+```bash
+mkdir frontend
+cd frontend
+touch index.html style.css script.js
+```
+
+### 2. Add some lines in `index.html` (week 1)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head></head>
+  <body></body>
+</html>
+```
+
+### 3. Import css and js files in `index.html` (week 1)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="index.js"></script>
+  </head>
+  <body></body>
+</html>
+```
+
+### 4. Run frontend (week 1)
+
+Simply click `index.html` in your file explorer to open it in your browser.
+
+### 5. Install dependencies (week 2)
+
+We need to install `axios` to make HTTP requests to the backend server. Add the following line in the `head` tag in `index.html` file. Find the latest version of `axios` [here](https://cdnjs.com/libraries/axios).
+
+```html
+<head>
+  ...
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js"
+    integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+</head>
+```
 
 ## Backend Setup
 
-### 1. Create a `backend` folder
+### 1. Create a backend directory and initialize a new Node.js project (week 1)
 
 ```bash
 mkdir backend
-```
-
-### 2. Create a `package.json` file
-
-```bash
 cd backend
 yarn init -y
 ```
 
-### 3. Install dependencies
+### 2. Add some lines in `package.json` (week 1)
 
-```bash
-yarn add express cors mongoose dotenv body-parser
-```
-
-### 4. Typescript setup
-
-```bash
-yarn add -D ts-node typescript @types/cors @types/node @types/express
-```
-
-`-D` flag means that the package is a dev dependency. It is only used during development and not in production.
-
-Then we create a `tsconfig.json` file
-
-```bash
-yarn tsc --init
-```
-
-We want to use the types defined in the `lib` folder. To make our lives easier, we can add the following line to `tsconfig.json`. Now we can import from `@lib/*` instead of `../../../lib/*`.
+If you already have the `scripts` field in `package.json`, add `"start": "nodemon index.js"` to the `scripts` field. Otherwise, add the following lines in `package.json` file.
 
 ```json
 {
-  "compilerOptions": {
-    ...
-    "@lib/*": ["../lib/*"],
-    ...
-  }
+  ...
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js",
+  },
+  ...
 }
 ```
 
-### 5. Create an entry point
+### 3. Environment variables setting (week 1)
+
+- In `/backend` directory, create a file named `.env`
+- Add some lines in `.env`
+  ```bash
+  PORT=8000
+  ```
+  Remember to add `.env` to `.gitignore` file. This is to prevent sensitive information from being exposed.
+
+### 4. Install dependencies (week 1)
 
 ```bash
-mkdir src
-touch src/index.ts
+cd backend
+yarn add express cors body-parser uuid
 ```
 
-### 6. Add scripts to `package.json`
+Remember to add `node_modules` to `.gitignore` file. This is because dependency files are large and not necessary to be uploaded to GitHub. You can always install dependencies by `yarn install` or `npm install` when you clone the project.
 
-```json
-"scripts": {
-  "dev": "nodemon src/index.ts",
-  "start": "ts-node src/index.ts",
-  "lint": "eslint .",
-  "format": "prettier --write ."
-}
+### 5. Run the server (week 1)
+
+```bash
+cd backend
+yarn dev
+```
+
+If successful, you should see the following message in the terminal:
+
+```bash
+Server is running on port http://localhost:8000
+```
+
+Next time you can just have to run `yarn start` to start the server. Step 1-4 are only needed for the first time.
+
+### 6. MongoDB setup (week 2)
+
+1. See this awesome tutorial: https://youtu.be/O5cmLDVTgAs?si=CNNLtl9m7kX7GbFh (2:01:08 - 2:03:00)
+2. Copy the connection string.
+3. Add the following line in `backend/.env` file
+
+```bash
+MONGO_URL=<your connection string>
+```
+
+4. Install dependencies
+
+```bash
+cd backend
+yarn add mongoose
 ```
