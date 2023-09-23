@@ -2,53 +2,72 @@
 const itemTemplate = document.querySelector("#todo-item-template");
 const addTemplate  = document.querySelector("#todo-input-container");
 const viewTemplate = document.querySelector("#todo-view-template");
-const todoList = document.querySelector("#todos");
+// const todoList = document.querySelector("#todos");
 let state = 1; //1 --> list page   2 --> add diary   3 --> view diary    4 --> edit diary
 let test = [{title:"test", mood:"happy", tag:"study", date:"2023-09-20", 
             description:"Web-programming is so hard.", id:"650bbe22cdd377b2e43971ff"}];
-let checkingId = "";
+let checkingId = "650c42ab0ecb1da17626e24e";
 
 const instance = axios.create({
   baseURL: "http://localhost:8000/api",
 });
 
+async function renderPage() {
+  const todos = await getTodos();
+  // const todos = test;
+  // console.log(todos);
+  todos.forEach((todo) => renderTodo(todo));
+
+  renderEdit();
+
+  renderView(document.getElementById(checkingId));
+}
+
 async function main() {
   console.log(state);
   if(state===1) {
     try {
-      const todos = await getTodos();
-      // const todos = test;
-      // console.log(todos);
-      todos.forEach((todo) => renderTodo(todo));
-      document.querySelector('#todo-add-main').style.display = 'block';
+      document.querySelector('#todo-add-main').style.display = "block";
+      document.getElementById("todo-item-template").style.display = "block";
+      document.getElementById("todo-input-container").style.display = "none";
+      document.getElementById("todo-view-template").style.display = "none";
     } catch (error) {
       alert("Failed to load list page!");
+      console.log(error);
     }
     setupEventListeners();
   }
   else if(state===2) {
     try {
-      renderEdit();
-      document.querySelector('#todo-add-main').style.display = 'none';
+      document.getElementById("todo-input-container").style.display = "block";
+      document.querySelector('#todo-add-main').style.display = "none";
+      document.getElementById("todo-item-template").style.display = "none";
+      document.getElementById("todo-view-template").style.display = "none";
     } catch (error) {
-      alert("Failed to load edit page!");
+      alert("Failed to load add page!");
     }
     addEventListeners();
   }
   else if(state===3) {
     try {
-      const todos = document.getElementById(checkingId);
-      renderView(todos);
-      document.querySelector('#todo-add-main').style.display = 'none';
+      document.getElementById("todo-view-template").style.display = "block";
+      document.querySelector('#todo-add-main').style.display = "none";
+      document.getElementById("todo-item-template").style.display = "none";
+      document.getElementById("todo-input-container").style.display = "none";
     } catch(error)  {
       alert("Fail to load view page!");
       console.log(error);
     }
+    const todos = document.getElementById(checkingId);
+    // renderView(todos);
+    createViewElement(todos);
   }
   else if(state===4) {
     try {
-      renderEdit();
-      document.querySelector('#todo-add-main').style.display = 'none';
+      document.getElementById("todo-input-container").style.display = "block";
+      document.querySelector('#todo-add-main').style.display = "none";
+      document.getElementById("todo-item-template").style.display = "none";
+      document.getElementById("todo-view-template").style.display = "none";
     } catch (error) {
       alert("Failed to load edit page!");
     }
@@ -60,9 +79,6 @@ async function main() {
 function setupEventListeners() {
   const addTodoButton = document.querySelector("#todo-add-main");
   addTodoButton.addEventListener ("click", async () => {
-    // console.log(document);
-    // document.querySelector('#todos').style.display = 'none';
-    // itemTemplate.style.display = "none";
     state=2;
     main();
   });
@@ -106,7 +122,7 @@ function addEventListeners() {
     }
     try {
       const todo = await createTodo({ title, mood, tag, date, description });
-      // renderTodo(todo);
+      renderTodo(todo);
     } catch (error) {
       console.log(error);
       alert("Failed to create diary!");
@@ -183,6 +199,11 @@ function editEventListeners(todo) {
       tagElement.textContent=tagInput.value;
       dateElement.textContent=dateInput.value;
       descriptionElement.textContent=todoDescriptionInput.value;
+      console.log(todo.id);
+      const todos = await updateTodostate(todo.id, { title, mood, tag, date, description });
+      console.log(todos);
+      document.getElementById(todo.id).remove();
+      renderTodo(todos);
     } catch (error) {
       console.log(error);
       alert("Failed to create diary!");
@@ -194,7 +215,6 @@ function editEventListeners(todo) {
     dateInput.value = "";
     todoDescriptionInput.value = "";
     state=1;
-    // console.log(test);
     main();
   });
   cancelButton.addEventListener("click", async => {
@@ -210,17 +230,17 @@ function editEventListeners(todo) {
 
 function renderTodo(todo) {
   const item = createTodoElement(todo);
-  todoList.appendChild(item);
+  document.getElementById("todo-item-template").appendChild(item);
 }
 
 function renderEdit() {
   const item = createEditElement();
-  todoList.appendChild(item);
+  document.getElementById("todo-input-container").appendChild(item);
 }
 
 function renderView(todo) {
   const item = createViewElement(todo);
-  todoList.appendChild(item);
+  document.getElementById("todo-view-template").appendChild(item);
 }
 
 function createTodoElement(todo) {
@@ -335,4 +355,5 @@ async function deleteTodoById(id) {
   return response.data;
 }
 
+renderPage();
 main();
