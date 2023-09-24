@@ -60,7 +60,7 @@ async function main() {
     }
     const todos = document.getElementById(checkingId);
     // renderView(todos);
-    createViewElement(todos);
+    setupViewElement(todos);
   }
   else if(state===4) {
     try {
@@ -309,6 +309,27 @@ function createViewElement(todo) {
     main();
   });
   return item;
+}
+
+function setupViewElement(todo) {
+  const moodInput = document.querySelector("p.mood-view");
+  const tagInput  = document.querySelector("p.tag-view" );
+  const dateInput = document.querySelector("p.date-view");
+  const todoInput = document.querySelector("h2.todo-view");
+  const todoDescriptionInput = document.querySelector(
+    "p.description-view",
+  );
+  console.log(moodInput);
+  const titleElement = todo.querySelector(".todo-title");
+  const moodElement = todo.querySelector(".mood-title");
+  const tagElement = todo.querySelector(".tag-title");
+  const dateElement = todo.querySelector(".date-title");
+  const descriptionElement = todo.querySelector(".todo-description");
+  todoInput.innerText = titleElement.textContent;
+  moodInput.innerText = moodElement.textContent;
+  tagInput.innerText = tagElement.textContent;
+  dateInput.innerText = dateElement.textContent;
+  todoDescriptionInput.innerText = descriptionElement.textContent;
 }
 
 async function viewTodoElement(id)  {
