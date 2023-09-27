@@ -33,12 +33,9 @@ async function renderPage() {
   // const todos = test;
   // console.log(todos);
   todos.forEach((todo) => renderTodo(todo));
-  document.getElementById("6512ddc547c8757ef0a16a0e").style.display = 'none';
 
   renderEdit();
 
-  console.log(checkingId);
-  console.log(test);
   renderView(test);
 }
 
