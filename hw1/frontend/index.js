@@ -6,21 +6,40 @@ const viewTemplate = document.querySelector("#todo-view-template");
 let state = 1; //1 --> list page   2 --> add diary   3 --> view diary    4 --> edit diary
 let test = [{title:"test", mood:"happy", tag:"study", date:"2023-09-20", 
             description:"Web-programming is so hard.", id:"650bbe22cdd377b2e43971ff"}];
-let checkingId = "650c42ab0ecb1da17626e24e";
+let checkingId = "650bbe22cdd377b2e43971ff";
 
 const instance = axios.create({
   baseURL: "http://localhost:8000/api",
 });
+
+function calcWeek(date) {
+  var da = (date.replace(/-/g, "/"));
+  var da = new Date(date);
+
+  var weekday = new Array(7);
+  weekday[0] = "(日)";
+  weekday[1] = "(一)";
+  weekday[2] = "(二)";
+  weekday[3] = "(三)";
+  weekday[4] = "(四)";
+  weekday[5] = "(五)";
+  weekday[6] = "(六)";
+
+  return weekday[da.getDay()];
+}
 
 async function renderPage() {
   const todos = await getTodos();
   // const todos = test;
   // console.log(todos);
   todos.forEach((todo) => renderTodo(todo));
+  document.getElementById("6512ddc547c8757ef0a16a0e").style.display = 'none';
 
   renderEdit();
 
-  renderView(document.getElementById(checkingId));
+  console.log(checkingId);
+  console.log(test);
+  renderView(test);
 }
 
 async function main() {
@@ -254,7 +273,8 @@ function createTodoElement(todo) {
   const mood = item.querySelector("p.mood-title");
   mood.innerText = todo.mood;
   const date = item.querySelector("p.date-title");
-  date.innerText = todo.date;
+  const week = calcWeek(todo.date);
+  date.innerText = todo.date + week;
   const description = item.querySelector("p.todo-description");
   description.innerText = todo.description;
   const viewButton = item.querySelector("button.view-todo");
@@ -283,27 +303,22 @@ function createEditElement() {
 function createViewElement(todo) {
   const item = viewTemplate.content.cloneNode(true);
   const title = item.querySelector("h2.todo-view");
-  const titleElement = todo.querySelector(".todo-title");
-  title.innerText = titleElement.textContent;
+  const titleElement = todo[0].title;
   const tag = item.querySelector("p.tag-view");
-  const tagElement = todo.querySelector(".tag-title");
-  tag.innerText = tagElement.textContent;
+  const tagElement = todo[0].tag;
   const mood = item.querySelector("p.mood-view");
-  const moodElement = todo.querySelector(".mood-title");
-  mood.innerText = moodElement.textContent;
+  const moodElement = todo[0].mood;
   const date = item.querySelector("p.date-view");
-  const dateElement = todo.querySelector(".date-title");
-  date.innerText = dateElement.textContent;
+  const dateElement = todo[0].date;
   const description = item.querySelector("p.description-view");
-  const descriptionElement = todo.querySelector(".todo-description");
-  description.innerText = descriptionElement.textContent;
-  const editButton = item.querySelector("button.edit-todo-in-view");
-  editButton.dataset.id = todo.id;
+  const descriptionElement = todo[0].description;
+  // const editButton = item.querySelector("button.edit-todo-in-view");
+  // editButton.dataset.id = todo.id;
   const backButton = item.querySelector("button.back-to-list-page");
   backButton.dataset.id = todo.id;
-  editButton.addEventListener("click", () => {
-    editTodoElement(todo.id);
-  });
+  // editButton.addEventListener("click", () => {
+  //   editTodoElement(todo.id);
+  // });
   backButton.addEventListener("click", () => {
     state=1;
     main();
@@ -319,7 +334,6 @@ function setupViewElement(todo) {
   const todoDescriptionInput = document.querySelector(
     "p.description-view",
   );
-  console.log(moodInput);
   const titleElement = todo.querySelector(".todo-title");
   const moodElement = todo.querySelector(".mood-title");
   const tagElement = todo.querySelector(".tag-title");
