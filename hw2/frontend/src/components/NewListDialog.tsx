@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -28,8 +28,17 @@ export default function NewListDialog({ open, title, description, onClose }: New
   const { fetchLists } = useCards();
 
   const handleAddList = async () => {
+    if (newTitle === "")  {
+      alert("Please enter Playlist title!")
+      return;
+    }
+    if (newDescription === "")  {
+      alert("Please enter the description!")
+      return;
+    }
+    
     try {
-      await createList({name: newTitle, description: newDescription, num: 0})
+      await createList({name: newTitle, description: newDescription,})
       fetchLists();
     } catch (error) {
       alert("Error: Failed to create list");

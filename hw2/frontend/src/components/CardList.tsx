@@ -14,13 +14,12 @@ import ListDialog from "./ListDialog";
 export type CardListProps = {
   id: string;
   name: string;
-  num: number;
   img: string;
   description: string;
   cards: CardProps[];
 };
 
-export default function CardList({ id, name, num, description, cards}: CardListProps) {
+export default function CardList({ id, name, description, cards}: CardListProps) {
   const [opnListDialog, setOpenListDialog] = useState(false);
   const { fetchLists } = useCards();
 
@@ -55,14 +54,13 @@ export default function CardList({ id, name, num, description, cards}: CardListP
           </div>
         </div>
         <Typography className="text-start" variant="h6">
-          {num} songs
+          {cards.length} songs
         </Typography>
       </Paper>
       <ListDialog
         open={opnListDialog}
         id={id}
         name={name}
-        num={num}
         img="./pic/cover1.svg"
         description={description}
         cards={cards}

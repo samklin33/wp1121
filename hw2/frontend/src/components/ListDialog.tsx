@@ -19,7 +19,6 @@ type ListDialogProps = {
     open: boolean;
     id:string;
     name: string;
-    num: number;
     img: string;
     description: string;
     cards: CardProps[];
@@ -27,7 +26,7 @@ type ListDialogProps = {
 }
 
 export default function ListDialog ({
-    open, id, name, num, img, description, cards, onClose, 
+    open, id, name, img, description, cards, onClose, 
 }: ListDialogProps) {
     const [openNewCardDialog, setOpenNewCardDialog] = useState(false);
     const [editingName, setEditingName] = useState(false);
@@ -39,6 +38,11 @@ export default function ListDialog ({
         if (!inputRef.current) return;
     
         const newName = inputRef.current.value;
+        
+        if (newName === "")  {
+            alert("Please enter Playlist title!")
+            return;
+        }
         if (newName !== name) {
           try {
             await updateList(id, { name: newName });
@@ -53,6 +57,11 @@ export default function ListDialog ({
         if (!inputRef.current) return;
     
         const newDescription = inputRef.current.value;
+
+        if (newDescription === "")  {
+            alert("Please enter the description!")
+            return;
+        }
         if (newDescription !== description) {
           try {
             await updateList(id, { description: newDescription });
@@ -70,14 +79,14 @@ export default function ListDialog ({
 
     return (
         <Dialog open={open} onClose={handleClose}>
-            <DialogContent>
+            <DialogContent className="w-96">
                 <img src={img} width={350} height={350}/>
                 {editingName ? (
                     <ClickAwayListener onClickAway={handleUpdateName}>
                     <Input
                         autoFocus
                         defaultValue={name}
-                        className="grow"
+                        className="grow w-80"
                         placeholder="Enter a new name for this list..."
                         sx={{ fontSize: "2rem" }}
                         inputRef={inputRef}
@@ -98,7 +107,7 @@ export default function ListDialog ({
                     <Input
                         autoFocus
                         defaultValue={description}
-                        className="grow"
+                        className="grow w-80"
                         placeholder="Enter a new description for this list..."
                         sx={{ fontSize: "1.2rem" }}
                         inputRef={inputRef}
@@ -107,7 +116,7 @@ export default function ListDialog ({
                 ) : (
                     <button
                         onClick={() => setEditingDescription(true)}
-                        className="w-full rounded-md p-2 hover:bg-white/10"
+                        className="w-80 rounded-md p-2 hover:bg-white/10"
                     >
                         <Typography className="text-start" variant="h6">
                             {description}
@@ -140,13 +149,12 @@ export default function ListDialog ({
             <Divider variant="middle" sx={{ mt: 1, mb: 2 }} />
             <div className="flex flex-col gap-4">
             {cards.map((card) => (
-                <Card key={card.id} {...card} songNum={num}/>
+                <Card key={card.id} {...card}/>
             ))}
             </div>
             <CardDialog
                 variant="new"
                 open={openNewCardDialog}
-                songNum={num}
                 onClose={() => setOpenNewCardDialog(false)}
                 listId={id}
             />

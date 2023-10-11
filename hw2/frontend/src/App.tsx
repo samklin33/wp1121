@@ -13,12 +13,14 @@ function App() {
     fetchLists();
     fetchCards();
   }, [fetchCards, fetchLists]);
+  console.log(lists)
 
   return (
     <>
       <HeaderBar />
       <TitleBar />
       <main className="mx-auto flex max-h-full flex-row gap-6 px-24 py-12">
+      
         {lists.map((list) => (
           <CardList key={list.id} {...list} />
         ))}

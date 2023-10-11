@@ -20,7 +20,6 @@ export const getLists = async (_: Request, res: Response<GetListsResponse>) => {
     const listsToReturn = lists.map((list) => {
       return {
         id: list.id,
-        num: list.num,
         name: list.name,
         description: list.description,
       };
@@ -47,7 +46,6 @@ export const getList = async (
     return res.status(200).json({
       id: lists.id,
       name: lists.name,
-      num: lists.num,
       description: lists.description,
       cards: lists.cards as unknown as CardData[],
     });
@@ -76,14 +74,13 @@ export const updateList = async (
 ) => {
   try {
     const { id } = req.params;
-    const { name, num, description } = req.body;
+    const { name, description } = req.body;
 
     // Update the list
     const newList = await ListModel.findByIdAndUpdate(
       id,
       {
         name: name,
-        num: num,
         description: description, 
       },
       { new: true },

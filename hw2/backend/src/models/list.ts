@@ -18,10 +18,6 @@ const ListSchema = new mongoose.Schema<ListDocument>(
       type: String,
       required: true,
     },
-    num:  {
-      type: Number,
-      required: true,
-    },
     description: {
       type: String,
       required: true,

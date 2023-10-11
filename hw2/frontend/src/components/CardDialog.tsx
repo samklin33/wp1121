@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Delete as DeleteIcon } from "@mui/icons-material";
 import Button from "@mui/material/Button";
@@ -14,7 +14,7 @@ import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 
 import useCards from "@/hooks/useCards";
-import { createCard, deleteCard, updateCard, updateList } from "@/utils/client";
+import { createCard, deleteCard, updateCard, } from "@/utils/client";
 
 // this pattern is called discriminated type unions
 // you can read more about it here: https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions
@@ -24,7 +24,6 @@ type NewCardDialogProps = {
   open: boolean;
   onClose: () => void;
   listId: string;
-  songNum: number;
 };
 
 type EditCardDialogProps = {
@@ -32,7 +31,6 @@ type EditCardDialogProps = {
   open: boolean;
   onClose: () => void;
   listId: string;
-  songNum: number;
   cardId: string;
   title: string;
   singer: string;
@@ -42,7 +40,7 @@ type EditCardDialogProps = {
 type CardDialogProps = NewCardDialogProps | EditCardDialogProps;
 
 export default function CardDialog(props: CardDialogProps) {
-  const { variant, open, onClose, listId, songNum } = props;
+  const { variant, open, onClose, listId } = props;
   const title = variant === "edit" ? props.title : "";
   const singer = variant === "edit" ? props.singer : "";
   const link = variant === "edit" ? props.link : "";
@@ -58,7 +56,6 @@ export default function CardDialog(props: CardDialogProps) {
   const [newSinger, setNewSinger] = useState(singer);
   const [newLink, setNewLink] = useState(link);
   const [newListId, setNewListId] = useState(listId);
-  const [newSongNum, setNewSongNum] = useState(songNum);
 
   const { lists, fetchLists, fetchCards } = useCards();
 
@@ -66,22 +63,15 @@ export default function CardDialog(props: CardDialogProps) {
     onClose();
   };
 
-  useEffect(() => {
-    console.log("newSongNum: ", newSongNum);
-  },[newSongNum]);
-
   const handleSave = async () => {
     try {
       if (variant === "new") {
-        setNewSongNum((newSongNum) => newSongNum+1);
-        
         await createCard({
           title: newTitle,
           singer: newSinger,
           link: newLink,
           list_id: listId,
         });
-        await updateList(props.listId, {num: newSongNum});
       } else {
         if (
           newTitle === title &&
@@ -115,9 +105,7 @@ export default function CardDialog(props: CardDialogProps) {
       return;
     }
     try {
-      setNewSongNum((newSongNum) => newSongNum-1);
       await deleteCard(props.cardId);
-      await updateList(props.listId, {num: newSongNum});
       fetchCards();
       fetchLists();
     } catch (error) {
