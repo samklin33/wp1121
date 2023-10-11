@@ -66,6 +66,18 @@ export default function CardDialog(props: CardDialogProps) {
   const handleSave = async () => {
     try {
       if (variant === "new") {
+        if (newTitle === "")  {
+          alert("Please enter the song name!")
+          return;
+        }
+        if (newSinger === "")  {
+          alert("Please enter the singer!")
+          return;
+        }
+        if (newLink === "")  {
+          alert("Please enter the link!")
+          return;
+        }
         await createCard({
           title: newTitle,
           singer: newSinger,

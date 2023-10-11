@@ -4,7 +4,7 @@ import { DialogContent, Paper } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
 import CardDialog from "./CardDialog";
-import { CheckBox } from "@mui/icons-material";
+// import { CheckBox } from "@mui/icons-material";
 
 export type CardProps = {
   id: string;
@@ -15,7 +15,7 @@ export type CardProps = {
   songNum: number;
 };
 
-export default function Card({ id, title, singer, link, listId , songNum}: CardProps) {
+export default function Card({ id, title, singer, link, listId }: CardProps) {
   const [cardDialogOpen, setCardDialogOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -42,7 +42,6 @@ export default function Card({ id, title, singer, link, listId , songNum}: CardP
         singer={singer}
         link={link}
         listId={listId}
-        songNum={songNum}
         cardId={id}
       />
     </>

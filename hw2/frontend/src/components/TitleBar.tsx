@@ -1,21 +1,41 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-import { Button, Toolbar } from "@mui/material";
+import { Button, Toolbar, Input } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
 import NewListDialog from "./NewListDialog";
 
-export default function TitleBar()  {
+type TitleBarProps = {
+    setSearch: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function TitleBar({setSearch}: TitleBarProps)  {
     
     // const [deleteButton, setDeleteButton] = useState(false);
     const [newListDialogOpen, setNewListDialogOpen] = useState(false);
+    const [searchInput, setSearchInput] = useState("");
     
     return (
         <>
             <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
                     My Playlists
                 </Typography>
+                <div>
+                    <Input
+                        type="text"
+                        placeholder="search playlist"
+                        defaultValue={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)}
+                    />
+                    <Button
+                        // variant="contained"
+                        className="w-25"
+                        onClick={() => setSearch(searchInput)}
+                    >
+                        Search
+                    </Button>
+                </div>
                 <Button
                     variant="contained"
                     className="w-25"
