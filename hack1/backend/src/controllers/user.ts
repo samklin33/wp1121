@@ -32,10 +32,12 @@ export const createUser = asyncWrapper(
     /* TODO 1.5: Ensure User Registration Functions Properly (8%) */
     /* Create new user using `UserModel` */
     /* Return 201 with new user */
-    try {
+    
+    const { username, password } = req.body;
 
-      const { username, password } = await UserModel.create (req.body);
-      return res.status(201).json({ username, password });
+    try {
+      const newUser = await UserModel.create({username, password});
+      return res.status(201).json(newUser);
 
     } catch(error)  {
       throw new Error('`createUser` Not Implemented');

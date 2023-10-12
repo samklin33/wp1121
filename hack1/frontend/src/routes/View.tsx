@@ -3,6 +3,7 @@ import PostCard from '@/components/PostCard';
 import ViewFooter from '@/components/ViewFooter';
 import { usePost } from '@/contexts/PostContext';
 import { useUser } from '@/contexts/UserContext';
+import { Users } from 'lucide-react';
 
 const View = (): React.ReactNode => {
   const { user } = useUser();

@@ -127,6 +127,7 @@ const AuthLayout = () => {
                 autoComplete="username"
                 defaultValue={username}
                 onChange={(e) => setUsername(e.target.value)}
+                placeholder='Enter Username'
                 required
               />
               {/* End of TODO 1.4 */}
@@ -173,7 +174,7 @@ const AuthLayout = () => {
                 defaultValue={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder='Confirm Password'
-                required
+                required={location.pathname === '/register'}
               />
               {/* End of TODO 1.5 */}
             </div>
