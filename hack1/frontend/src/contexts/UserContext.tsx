@@ -39,7 +39,12 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   /* Reference: https://reactrouter.com/en/6.16.0/hooks/use-navigate */
   /*            https://reactrouter.com/en/6.16.0/hooks/use-location */
   /*            https://github.com/remix-run/history/blob/main/docs/api-reference.md#location */
-
+  useEffect (() => {
+    if (!authenticated) {
+      navigate('/login');
+    }
+  },[]
+  );
   /* Reminder: Don't import this useEffect hook if you are tired of being redirected to the login page. */
   /* Warning: But remember to add it back before submitting your work. */
   /* End of TODO 1.2 */
@@ -49,13 +54,6 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       setUser(userData);
       setAuthenticated(true);
       navigate('/view');
-
-      useEffect (() => {
-        if (!authenticated) {
-          navigate('/login');
-        }
-      },[]
-      );
 
     } catch (error) {
       toast({

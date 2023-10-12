@@ -40,6 +40,7 @@ export const createUser = asyncWrapper(
       })
     } catch(error)  {
       throw new Error('`createUser` Not Implemented');
+      console.log(error);
     }
     /* End of TODO 1.5 */
   },
