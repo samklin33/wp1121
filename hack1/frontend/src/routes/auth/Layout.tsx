@@ -99,7 +99,7 @@ const AuthLayout = () => {
             {/* The title should be "VSCoddit" */}
             
             <img src="../../public/vscoddit.svg" data-testid="header-logo" className="h-5 w-5 brightness-200" alt="VSCoddit Logo" />
-            <span data-testid="header-title" />VSCoddit
+            <span data-testid="header-title">VSCoddit</span>
             {/* END of TODO 1.1 */}
           </CardTitle>
           <CardDescription>

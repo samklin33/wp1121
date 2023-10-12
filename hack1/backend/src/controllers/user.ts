@@ -36,7 +36,7 @@ export const createUser = asyncWrapper(
     const { username, password } = req.body;
 
     try {
-      const newUser = await UserModel.create({username, password});
+      const newUser = await UserModel.create({ username, password });
       return res.status(201).json(newUser);
 
     } catch(error)  {
