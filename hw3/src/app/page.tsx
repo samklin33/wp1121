@@ -8,7 +8,6 @@ import NewTweet from "@/components/NewTweet";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/db";
 import { likesTable, tweetsTable, usersTable } from "@/db/schema";
-import { useState } from "react";
 import React from "react";
 
 type HomePageProps = {
@@ -65,10 +64,6 @@ export default async function Home({
       content: tweetsTable.content,
       username: usersTable.displayName,
       handle: usersTable.handle,
-      // startDate: tweetsTable.startDate, 
-      // startTime: tweetsTable.startTime, 
-      // endDate: tweetsTable.endDate, 
-      // endTime: tweetsTable.endTime,
       likes: likesSubquery.likes,
       createdAt: tweetsTable.createdAt,
       liked: likedSubquery.liked,
@@ -81,18 +76,20 @@ export default async function Home({
     .leftJoin(likedSubquery, eq(tweetsTable.id, likedSubquery.tweetId))
     .execute();
 
-  // const [search, setSearch] = typeof window !== 'undefined' ? React.useState(""): ["", () => null];
+  const [search, setSearch] = typeof window !== 'undefined' ? React.useState(""): ["test", () => null];
+  // const [search, setSearch] = useState("");
+  console.log("search: ", search, ".")
 
   return (
     <>
       <div className="flex h-screen w-full max-w-2xl flex-col overflow-scroll pt-2">
         <ProfileButton />
         <div className="my-2 flex items-center justify-between gap-4 text-black-400">
-          <SearchBar/>
+          <SearchBar /*setSearch={setSearch}*/ />
           <NewTweet />
         </div>
         <Separator />
-        {tweets.map((tweet) => (
+        {tweets.filter((tweet) => (tweet.content.toLocaleLowerCase().includes(search.toLocaleLowerCase()))).map((tweet) => (
           <Tweet
             key={tweet.id}
             id={tweet.id}

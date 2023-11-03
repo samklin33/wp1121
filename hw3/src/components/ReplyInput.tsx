@@ -10,13 +10,13 @@ import useReply from "@/hooks/useReply";
 type ReplyInputProps = {
   replyToTweetId: number;
   userName?: string;
-  liked: boolean;
+  // liked: boolean;
 };
 
 export default function ReplyInput({
   replyToTweetId,
   userName, 
-  liked, 
+  // liked, 
 }: ReplyInputProps) {
   const username = userName?.toString();
   const { handle } = useUserInfo();

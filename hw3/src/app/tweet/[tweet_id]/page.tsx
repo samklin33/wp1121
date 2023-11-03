@@ -109,6 +109,7 @@ export default async function TweetPage({
       content: repliesTable.content,
       username: usersTable.displayName,
       handle: usersTable.handle, 
+      replyToTweet: repliesTable.replyToTweetId, 
       createdAt: repliesTable.createdAt,
     })
     .from(repliesTable)
@@ -143,10 +144,10 @@ export default async function TweetPage({
         </div>
         <Separator />
       </div>
-      {tweet.liked && <ReplyInput replyToTweetId={tweet.id} userName={tweet.username} liked={tweet.liked}/>}
+      {tweet.liked && <ReplyInput replyToTweetId={tweet.id} userName={tweet.username} /*liked={tweet.liked}*/ />}
       {!tweet.liked && <p className="bg-transparent text-xl outline-none text-gray-500">參加活動來留下想法</p>}
       <Separator />
-      {replies.map((reply) => (
+      {replies.filter((reply) => (reply.replyToTweet===tweet.id)).map((reply) => (
         <Reply
           key={reply.id}
           username={reply.username}
