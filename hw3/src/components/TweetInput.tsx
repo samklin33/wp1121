@@ -5,8 +5,11 @@ import { useRef } from "react";
 import GrowingTextarea from "@/components/GrowingTextarea";
 import useTweet from "@/hooks/useTweet";
 import useUserInfo from "@/hooks/useUserInfo";
+// import { db } from "@/db"
 import { cn } from "@/lib/utils";
 import Dialog from "@mui/material/Dialog";
+import { useRouter } from "next/navigation";
+import { tweetsTable } from "@/db/schema";
 
 type TweetInputProps = {
     open: boolean;
@@ -14,13 +17,14 @@ type TweetInputProps = {
 }
 
 export default function TweetInput({ open, onClose }: TweetInputProps) {
-  const { handle } = useUserInfo();
+  const { handle, username } = useUserInfo();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const startDateRef = useRef<HTMLInputElement>(null);
   const startTimeRef = useRef<HTMLInputElement>(null);
   const endDateRef = useRef<HTMLInputElement>(null);
   const endTimeRef = useRef<HTMLInputElement>(null);
   const { postTweet, loading } = useTweet();
+  const router = useRouter();
 
   const handleTweet = async () => {
     const content = textareaRef.current?.value;
@@ -55,11 +59,19 @@ export default function TweetInput({ open, onClose }: TweetInputProps) {
       startTimeRef.current.dispatchEvent(new Event("input", { bubbles: true, composed: true }), );
       endDateRef.current.dispatchEvent(new Event("input", { bubbles: true, composed: true }), );
       endTimeRef.current.dispatchEvent(new Event("input", { bubbles: true, composed: true }), );
+
+      directToEvent();
     } catch (error) {
       console.error(error);
       alert("Error posting tweet");
     }
   };
+
+  const directToEvent = () => {
+    const tweetId = tweetsTable.id;
+    console.log("tweetId: ", tweetId);
+    router.push(`/tweet/${tweetId}?usename=${username}handle=${handle}`)
+  }
 
   return (
     <>

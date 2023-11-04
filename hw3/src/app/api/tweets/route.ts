@@ -18,7 +18,6 @@ const postTweetRequestSchema = z.object({
 type PostTweetRequest = z.infer<typeof postTweetRequestSchema>;
 
 export async function POST(request: NextRequest) {
-  console.log("ok")
   const data = await request.json();
 
   try {

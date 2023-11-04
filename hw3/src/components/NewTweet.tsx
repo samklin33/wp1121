@@ -16,7 +16,7 @@ export default function NewTweet()  {
                 新增
             </button>
         </div>
-        <TweetInput open={NewTweetInput} onClose={() => setNewTweetInput(false)}/>
+        <TweetInput open={NewTweetInput} onClose={() => setNewTweetInput(false)} />
         </>
     )
 }

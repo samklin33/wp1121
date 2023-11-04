@@ -35,14 +35,13 @@ export default function LikeButton({
         tweetId,
         userHandle: handle,
       });
-      console.log(liked)
       setLiked(true);
     }
   };
 
   return (
     <>
-    {/*!liked && */<button
+    <button
       className={cn(
         "flex w-16 items-center gap-1 hover:text-brand",
         liked && "text-brand",
@@ -58,8 +57,7 @@ export default function LikeButton({
       >
         我要參加
       </div>
-    </button>}
-    {/* {liked && <p className="flex w-16 items-center gap-1 text-brand">已參加</p>} */}
+    </button>
     </>
   );
 }

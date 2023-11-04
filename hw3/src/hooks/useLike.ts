@@ -26,10 +26,8 @@ export default function useLike() {
 
     if (!res.ok) {
       const body = await res.json();
-      // console.log(body.error);
       throw new Error(body.error);
     }
-    // console.log("likes to backend")
 
     router.refresh();
     setLoading(false);
