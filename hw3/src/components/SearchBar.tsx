@@ -8,7 +8,7 @@ type SearchBarProps = {
     setSearch: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function SearchBar({ setSearch }: SearchBarProps) {
+export default function SearchBar(/*{ setSearch }: SearchBarProps*/) {
 
     const [searchInput, setSearchInput] = useState("");
 
@@ -20,7 +20,7 @@ export default function SearchBar({ setSearch }: SearchBarProps) {
                 placeholder="尋找活動"
                 onChange={(e) => setSearchInput(e.target.value)}
             />
-            <button onClick={() => setSearch(searchInput)}>
+            <button onClick={() => null /*setSearch(searchInput)*/}>
                 <Image src={search} alt="search" width={35} height={35}/>
             </button>
         </div>

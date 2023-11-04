@@ -76,8 +76,9 @@ export default async function Home({
     .leftJoin(likesSubquery, eq(tweetsTable.id, likesSubquery.tweetId))
     .leftJoin(likedSubquery, eq(tweetsTable.id, likedSubquery.tweetId))
     .execute();
-
-  const [search, setSearch] = useState("");
+  
+  const [search, setSearch] = typeof window !== 'undefined' ? React.useState(""): [(""), () => null]
+  // const [search, setSearch] = useState("");
   console.log("search: ", search, ".")
 
   return (
@@ -85,7 +86,7 @@ export default async function Home({
       <div className="flex h-screen w-full max-w-2xl flex-col overflow-scroll pt-2">
         <ProfileButton />
         <div className="my-2 flex items-center justify-between gap-4 text-black-400">
-          <SearchBar setSearch={setSearch} />
+          <SearchBar /*setSearch={setSearch}*/ />
           <NewTweet />
         </div>
         <Separator />
