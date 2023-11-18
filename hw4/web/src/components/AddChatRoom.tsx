@@ -27,7 +27,11 @@ function AddChatRoom() {
         }
     }
     const handleClose = () => {
+        try {
             router.push("/");
+        } catch (error) {   
+            console.log(error);
+        }
     }
 
     return (

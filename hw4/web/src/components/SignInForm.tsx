@@ -11,7 +11,7 @@ function SignInForm() {
 
   const handleSignIn = async () => {
     try {
-      await signIn({ displayId });
+      await signIn(displayId);
       setUser({ displayId });
       router.push("/chat");
     } catch (error) {
