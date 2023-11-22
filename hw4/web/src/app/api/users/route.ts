@@ -45,6 +45,7 @@ export async function PUT(request: NextRequest) {
   try {
     signInSchema.parse(data.user);
   } catch (error) {
+    
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
   const { displayId, chatroom } = data as SignInRequest;
@@ -52,7 +53,8 @@ export async function PUT(request: NextRequest) {
     displayId: displayId,
     chatroom: chatroom,
   };
-  db.user.chatroom?.push(chatroom[0]);
+  // db.user = newUser;
+  db.user.chatroom.push(...chatroom);
   return NextResponse.json(
     {
       user: newUser,

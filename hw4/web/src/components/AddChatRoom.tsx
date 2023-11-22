@@ -1,26 +1,20 @@
 "use client";
-import { useState } from "react";
+import { UserContext } from "@/context/user";
+import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 
 function AddChatRoom() {
+    const { user } = useContext(UserContext);
     const [ chatName, setChatName ] = useState("");
     const router = useRouter();
 
     const handleChat = async (e: React.FormEvent) => {
         e.preventDefault();
-        const user = await fetch("/api/users", {
-            method: "GET",
-            headers: {
-                "content-type": "application/json;charset=UTF-8",
-            },
-        }).then((res) => res.json());
-        user.user.chatroom.push(chatName);
-        console.log(user);
-        console.log(user.user);
+        const data = { displayId: user?.displayId, chatroom: chatName };
         try {
             const res = await fetch("/api/users", {
                 method: "PUT",
-                body: JSON.stringify({ user: user.user }),
+                body: JSON.stringify(data),
                 headers: {
                     "content-type": "application/json",
                 },

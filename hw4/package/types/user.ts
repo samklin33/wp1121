@@ -1,5 +1,5 @@
 export type User = {
   displayId: string;
-  chatroom?: string[];
+  chatroom: string[];
 };
 
