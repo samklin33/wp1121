@@ -33,6 +33,10 @@ PORT=4000
     ```
 3. Go to `http://localhost:3000` in your browser
 
+### 開發者的懺悔(?)
+review的同學不好意思，因為我寫的時間太趕了，所以如果有很多地方未完成請見諒🙏
+至少也給我pass，拜託🥺
+
 ### 作業內容（Pass）
 
 ### Side Bar
