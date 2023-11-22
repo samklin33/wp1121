@@ -7,7 +7,7 @@ function SignInForm() {
   const { user, setUser } = useContext(UserContext);
   const { signIn } = useContext(UserContext);
   const [displayId, setDisplayId] = useState(user?.displayId ?? "");
-  const [chatroom, setChatroom] = useState(user?.chatroom ?? []);
+  const [chatroom] = useState(user?.chatroom ?? []);
   const router = useRouter();
 
   const handleSignIn = async () => {

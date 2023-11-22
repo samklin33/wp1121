@@ -24,7 +24,7 @@ export function UserProvider({ children }: Props) {
     try {
       const res = await fetch("/api/users", {
         method: "POST",
-        body: JSON.stringify({ user: displayId, chatroom: chatroom }),
+        body: JSON.stringify({ displayId: displayId, chatroom: chatroom }),
         headers: {
           "content-type": "application/json;charset=UTF-8",
         },

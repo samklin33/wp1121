@@ -20,12 +20,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   const data = await request.json();
-  console.log("data: ", data);
-  console.log(data.user.displayId)
   try {
     signInSchema.parse(data);
   } catch (error) {
-    console.log("error: ", error);
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
   const { displayId, chatroom } = data as SignInRequest;
@@ -55,7 +52,7 @@ export async function PUT(request: NextRequest) {
     displayId: displayId,
     chatroom: chatroom,
   };
-  db.user = newUser;
+  db.user.chatroom?.push(chatroom[0]);
   return NextResponse.json(
     {
       user: newUser,
