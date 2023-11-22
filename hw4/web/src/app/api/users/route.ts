@@ -4,7 +4,8 @@ import { db } from "@/db";
 import type { User } from "@/package/types/user";
 
 const signInSchema = z.object({
-  user: z.string().min(1).max(50),
+  displayId: z.string().min(0).max(50),
+  chatroom: z.array(z.string().min(0).max(50)),
 });
 type SignInRequest = z.infer<typeof signInSchema>;
 
@@ -20,15 +21,39 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   const data = await request.json();
   console.log("data: ", data);
+  console.log(data.user.displayId)
   try {
     signInSchema.parse(data);
   } catch (error) {
+    console.log("error: ", error);
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
-  const { user } = data as SignInRequest;
+  const { displayId, chatroom } = data as SignInRequest;
   const newUser: User = {
-    displayId: user,
-    chatroom: [],
+    displayId: displayId,
+    chatroom: chatroom,
+  };
+  db.user = newUser;
+  return NextResponse.json(
+    {
+      user: newUser,
+    },
+    { status: 200 },
+  );
+}
+
+export async function PUT(request: NextRequest) {
+  const data = await request.json();
+  console.log("data: ", data);
+  try {
+    signInSchema.parse(data.user);
+  } catch (error) {
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  }
+  const { displayId, chatroom } = data as SignInRequest;
+  const newUser: User = {
+    displayId: displayId,
+    chatroom: chatroom,
   };
   db.user = newUser;
   return NextResponse.json(

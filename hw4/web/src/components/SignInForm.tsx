@@ -7,12 +7,13 @@ function SignInForm() {
   const { user, setUser } = useContext(UserContext);
   const { signIn } = useContext(UserContext);
   const [displayId, setDisplayId] = useState(user?.displayId ?? "");
+  const [chatroom, setChatroom] = useState(user?.chatroom ?? []);
   const router = useRouter();
 
   const handleSignIn = async () => {
     try {
-      await signIn(displayId);
-      setUser({ displayId });
+      await signIn(displayId, chatroom);
+      setUser({ displayId: displayId, chatroom: chatroom });
       router.push("/chat");
     } catch (error) {
       console.log(error);
@@ -31,8 +32,7 @@ function SignInForm() {
       <div className="flex flex-col gap-1">
         <h1 className="text-xl font-bold">Sign In</h1>
         <p className="text-sm text-gray-400 font-light text-clip">
-          Enter your display ID to sign in. If you don't have a display ID, you
-          can get one by signing up.
+          Enter your display ID to sign in.
         </p>
       </div>
       <div className="grid grid-cols-4 gap-4 items-center">

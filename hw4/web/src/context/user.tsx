@@ -5,7 +5,7 @@ import type { User } from "@/package/types/user";
 export type UserContext = {
   user: User | null;
   setUser: (user: User) => void;
-  signIn: (user: string) => Promise<void>;
+  signIn: (user: string, chatroom: string[]) => Promise<void>;
 };
 
 export const UserContext = createContext<UserContext>({
@@ -20,12 +20,11 @@ type Props = {
 export function UserProvider({ children }: Props) {
   const [user, setUser] = useState<User | null>(null);
 
-  const signIn = async (displayId: string) => {
+  const signIn = async (displayId: string, chatroom: string[]) => {
     try {
-      // console.log(displayId);
       const res = await fetch("/api/users", {
         method: "POST",
-        body: JSON.stringify({ user: displayId }),
+        body: JSON.stringify({ user: displayId, chatroom: chatroom }),
         headers: {
           "content-type": "application/json;charset=UTF-8",
         },

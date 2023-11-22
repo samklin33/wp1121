@@ -1,5 +1,4 @@
-import ChatRoomInput from "@/components/ChatRoomInput";
-import ChatRoomMessages from "@/components/ChatRoomMessages";
+import EmptyChatRoom from "@/components/EmptyChatRoom";
 import ChatRoomBar from "@/components/ChatRoomBar";
 import React from "react";
 
@@ -11,11 +10,8 @@ function Chat() {
       </div>
       <div className="w-50% h-full overflow-hidden flex flex-col shadow-lg">
         <nav className="w-full shadow-md p-3 text-md font-semibold">Chatroom</nav>
-        <div className="overflow-y-scroll grow">
-          <ChatRoomMessages />
-        </div>
         <div className="p-2">
-          <ChatRoomInput />
+          <EmptyChatRoom />
         </div>
       </div>
     </div>

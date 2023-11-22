@@ -3,32 +3,40 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 function AddChatRoom() {
-    console.log("AddChatRoom");
     const [ chatName, setChatName ] = useState("");
     const router = useRouter();
 
-    const handleChat = async () => {
+    const handleChat = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const user = await fetch("/api/users", {
+            method: "GET",
+            headers: {
+                "content-type": "application/json;charset=UTF-8",
+            },
+        }).then((res) => res.json());
+        user.user.chatroom.push(chatName);
+        console.log(user);
+        console.log(user.user);
         try {
             const res = await fetch("/api/users", {
-                method: "POST",
-                body: JSON.stringify({ chatName }),
+                method: "PUT",
+                body: JSON.stringify({ user: user.user }),
                 headers: {
-                    "Content-Type": "application/json",
+                    "content-type": "application/json",
                 },
             });
-            const data = await res.json();
-            console.log(data);
-            if(!res.ok) {
+            if (!res.ok) {
                 const data = await res.json();
                 throw new Error(data.error);
-            }
+            }    
         } catch (error) {
             console.log(error);
         }
+        router.push("/chat");
     }
     const handleClose = () => {
         try {
-            router.push("/");
+            router.push("/chat");
         } catch (error) {   
             console.log(error);
         }

@@ -8,7 +8,9 @@ import Avatar from "./Avatar";
 function ChatRoomBar() {
     const { user } = useContext(UserContext);
     const [ search, setSearch ] = useState("");
+    const [ searchInput, setSearchInput ] = useState("");
     const router = useRouter();
+    console.log(user?.chatroom);
   
     useEffect(() => {
         if (!user) {
@@ -19,8 +21,6 @@ function ChatRoomBar() {
 
     const handleAddChat = () => {
         router.push("/add");
-    }
-    const handleSearch = () => {
     }
     const handleLogout = () => {
         router.push("/");
@@ -45,19 +45,20 @@ function ChatRoomBar() {
                     className="flex-grow border shadow-lg p-6 rounded-full gap-4 lg:w-1/3 md:w-1/2 w-2/3"
                     type="text"
                     placeholder="Search User..."
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={(e) => setSearchInput(e.target.value)}
                 />
                 <button
                     className="bg-black text-white py-2 px-4 rounded-full text-sm hover:bg-gray-700 transition duration-200 ease-in-out"
-                    onClick={handleSearch}
+                    onClick={() => setSearch(searchInput)}
                 >
                     Search
                 </button>
             </div>
             <div className="overflow-y-scroll grow">
-                {user?.chatroom?.map((chat) => (
-                    <ChatRoom chatId={chat}/>
+                {user?.chatroom?.filter((chat) => chat.includes(search.toLowerCase())).map((chat) => (
+                    <ChatRoom chatId={chat} {...user.chatroom}/>
                 ))}
+                <ChatRoom chatId="test"/>
             </div>
             <div className="flex flex-row justify-between items-center gap-2">
                 <div className="flex flex-row justift-between items-center gap-2">

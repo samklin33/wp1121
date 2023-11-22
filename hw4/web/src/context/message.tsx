@@ -42,7 +42,7 @@ export function MessagesProvider({ children }: Props) {
         const data = await res.json();
         if (data?.messages) {
           setMessages(data.messages);
-          console.log(data.messages);
+          // console.log(data.messages);
         }
       } catch (error) {
         console.log(error);
