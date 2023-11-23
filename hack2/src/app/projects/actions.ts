@@ -65,6 +65,7 @@ export async function createProject(
   });
 
   // TODO: 6. Update the navbar for the user's projects
+  revalidatePath("/app/projects");
 
   // TODO: 6. end
 
