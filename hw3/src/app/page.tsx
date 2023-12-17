@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { db } from "@/db";
 import { likesTable, tweetsTable, usersTable } from "@/db/schema";
 import React from "react";
-import { useState } from "react";
+// import { useState } from "react";
 
 type HomePageProps = {
   searchParams: {
@@ -77,7 +77,8 @@ export default async function Home({
     .leftJoin(likedSubquery, eq(tweetsTable.id, likedSubquery.tweetId))
     .execute();
   
-  const [search, setSearch] = typeof window !== 'undefined' ? React.useState(""): [(""), () => null]
+  const search = '';
+  // const [search, setSearch] = typeof window !== 'undefined' ? React.useState(""): [(""), () => null]
   // const [search, setSearch] = useState("");
   console.log("search: ", search, ".")
 

@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 import search from "@/assets/search.png";
 
-type SearchBarProps = {
-    setSearch: React.Dispatch<React.SetStateAction<string>>;
-}
+// type SearchBarProps = {
+//     setSearch: React.Dispatch<React.SetStateAction<string>>;
+// }
 
 export default function SearchBar(/*{ setSearch }: SearchBarProps*/) {
 
-    const [searchInput, setSearchInput] = useState("");
+    const [/*searchInput*/, setSearchInput] = useState("");
 
     return (
         <>
