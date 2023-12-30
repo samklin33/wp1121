@@ -54,7 +54,6 @@ export default function HeadBar() {
                     className="m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() => router.push("/")}
                 >登出</button>}
-                <button onClick={()=>{testApi()}} className="hover:bg-orange-500">test</button>
             </div>
         </div>
         </>
